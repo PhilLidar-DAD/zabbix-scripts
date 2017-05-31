@@ -3,10 +3,27 @@ module zabbix_agentd 1.0;
 
 require {
 	type zabbix_agent_t;
-	class process setrlimit;
-	class capability dac_override;
+	type ping_exec_t;
+	type sshd_t;
+	class process { setcap setrlimit signull };
+	class capability { dac_override net_raw };
+	class file { execute execute_no_trans };
+	class rawip_socket { create getopt setopt };
 }
 
 #============= zabbix_agent_t ==============
-allow zabbix_agent_t self:capability dac_override;
-allow zabbix_agent_t self:process setrlimit;
+
+#!!!! This avc is allowed in the current policy
+allow zabbix_agent_t ping_exec_t:file { execute execute_no_trans };
+
+#!!!! This avc is allowed in the current policy
+allow zabbix_agent_t self:capability { dac_override net_raw };
+
+#!!!! This avc is allowed in the current policy
+allow zabbix_agent_t self:process { setcap setrlimit };
+
+#!!!! This avc is allowed in the current policy
+allow zabbix_agent_t self:rawip_socket { create getopt setopt };
+
+#!!!! This avc is allowed in the current policy
+allow zabbix_agent_t sshd_t:process signull;
