@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$#" -ne 1 ]]; then
-    echo "Specify configuration path! Exiting.
+    echo "Specify configuration path! Exiting."
     exit 1
 fi
 
