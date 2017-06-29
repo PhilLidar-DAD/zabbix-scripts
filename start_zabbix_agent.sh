@@ -11,5 +11,10 @@ ZABBIX_BIN="${ZABBIX_PATH}/sbin/zabbix_agentd"
 # FreeNAS 9.10
 ln -sf /usr/local/lib/libiconv.so.2.5.1 /usr/local/lib/libiconv.so.2
 
+#make directory if it doesnt exist
+mkdir -p /var/run/zabbix/
+#create the file if it doesnt exist
+touch /var/run/zabbix/zabbix_agentd.pid
+
 /usr/bin/lockf -kns -t 0 $ZABBIX_BIN $ZABBIX_BIN -f -c $ZABBIX_CONF
 
