@@ -60,7 +60,7 @@ def _discovery():
     print json.dumps({'data': data}, sort_keys=True, indent=4)
 
 
-def _sizetobakup(folder_name):
+def _sizetobackup(folder_name):
    # Check if map file exists
    if not os.path.isfile(MAP_FILE):
       # Create map file
