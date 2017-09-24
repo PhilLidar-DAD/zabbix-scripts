@@ -98,7 +98,7 @@ def _copied(folder_name):
    totalsize = ts_file.read()
    stb_file = open(os.path.join(SIZETOBACKUP_DIR,folder),'r')
    sizetobackup = stb_file.read()
-   return totalsize-sizetobackup
+   return str(int(totalsize)-int(sizetobackup))
 
 
 if __name__ == '__main__':
