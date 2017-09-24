@@ -68,7 +68,8 @@ def _sizetobackup(folder_name):
    # Load disk map from file
    folder_map = json.load(open(MAP_FILE, 'r'))
    folder = folder_map[folder_name]
-   sizetobackup = open(os.path.join(SIZETOBACKUP_DIR,folder),'r')
+   stb_file = open(os.path.join(SIZETOBACKUP_DIR,folder),'r')
+   sizetobackup = stb_file.read()
    return sizetobackup
 
 def _totalsize(folder_name):
@@ -79,7 +80,8 @@ def _totalsize(folder_name):
    # Load disk map from file
    folder_map = json.load(open(MAP_FILE, 'r'))
    folder = folder_map[folder_name]
-   totalsize = open(os.path.join(TOTALSIZE_DIR,folder),'r')
+   ts_file = open(os.path.join(TOTALSIZE_DIR,folder),'r')
+   totalsize = ts_file.read()
    return totalsize
 
 
