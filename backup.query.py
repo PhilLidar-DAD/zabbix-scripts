@@ -27,7 +27,7 @@ def _parse_arguments():
                         version=_version)
     parser.add_argument('-v', '--verbose', action='count', default=0)
     parser.add_argument('action', action='store',
-                        choices=['discovery', 'sizetobackup', 'totalsize'])
+                        choices=['discovery', 'sizetobackup', 'totalsize','copied'])
     parser.add_argument('folder_name', nargs='?')
     args = parser.parse_args()
     return args
@@ -72,6 +72,7 @@ def _sizetobackup(folder_name):
    sizetobackup = stb_file.read()
    return sizetobackup
 
+
 def _totalsize(folder_name):
    # Check if map file exists
    if not os.path.isfile(MAP_FILE):
@@ -83,6 +84,21 @@ def _totalsize(folder_name):
    ts_file = open(os.path.join(TOTALSIZE_DIR,folder),'r')
    totalsize = ts_file.read()
    return totalsize
+
+
+def _copied(folder_name):
+   # Check if map file exists
+   if not os.path.isfile(MAP_FILE):
+      # Create map file
+      _create_map_file()
+   # Load disk map from file
+   folder_map = json.load(open(MAP_FILE, 'r'))
+   folder = folder_map[folder_name]
+   ts_file = open(os.path.join(TOTALSIZE_DIR,folder),'r')
+   totalsize = ts_file.read()
+   stb_file = open(os.path.join(SIZETOBACKUP_DIR,folder),'r')
+   sizetobackup = stb_file.read()
+   return totalsize-sizetobackup
 
 
 if __name__ == '__main__':
@@ -101,6 +117,12 @@ if __name__ == '__main__':
     elif args.action == 'totalsize':
         if not args.folder_name is None:
             print _totalsize(args.folder_name)
+        else:
+            print 'folder_name missing! Exiting.'
+            exit(1)
+    elif args.action == 'copied':
+        if not args.folder_name is None:
+            print _copied(args.folder_name)
         else:
             print 'folder_name missing! Exiting.'
             exit(1)
